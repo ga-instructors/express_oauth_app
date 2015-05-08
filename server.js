@@ -12,9 +12,7 @@ app.use(session({
   resave:            false
 }));
 
-app.get('/', function(req, res) {
-  res.send('Hello!');
-});
+app.use(express.static('./public'));
 
 app.listen(9888, function() {
   console.log('Server running on port 9888...');
