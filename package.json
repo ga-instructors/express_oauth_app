@@ -1,18 +1,15 @@
 {
   "name": "express_oauth_app",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "version": "0.1.0",
+  "description": "An exercise for understanding OAuth2.",
+  "main": "server.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/h4w5/express_oauth_app.git"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/h4w5/express_oauth_app/issues"
   },
