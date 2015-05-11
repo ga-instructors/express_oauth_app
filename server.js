@@ -2,6 +2,7 @@ var express = require('express');
 var session = require('express-session');
 var morgan  = require('morgan');
 var request = require('request');
+var layout  = require('express-layout');
 
 var app = express();
 
@@ -9,6 +10,7 @@ var GITHUB_OAUTH_ID     = process.env.GITHUB_OAUTH_ID;
 var GITHUB_OAUTH_SECRET = process.env.GITHUB_OAUTH_SECRET;
 
 app.set('view engine', 'ejs');
+app.set('layout', 'layout');
 
 app.use(morgan('dev'));
 app.use(session({
@@ -16,6 +18,7 @@ app.use(session({
   saveUninitialized: false,
   resave:            false
 }));
+app.use(layout());
 
 app.use(express.static('./public'));
 
@@ -58,6 +61,11 @@ app.get('/oauth_callback', function(req, res) {
 app.get('/complete', function(req, res) {
   var access_token = req.session.access_token;
 
+  if (!access_token) {
+    res.redirect('/');
+    return;
+  }
+
   if (!req.session.name) {
     request({
       url:    'https://api.github.com/user',
@@ -69,7 +77,7 @@ app.get('/complete', function(req, res) {
     }, function(err, response, body) {
       req.session.name  = body.name
       req.session.email = body.email
-      
+
       res.render('complete', {
         name:  req.session.name,
         email: req.session.email
